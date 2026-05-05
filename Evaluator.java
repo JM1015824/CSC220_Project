@@ -7,7 +7,15 @@ public class Evaluator {
         if (node.left == null && node.right == null) {
             return Integer.parseInt(node.value);
         }
+        // postfix ++
+        if (node.value.equals("++") && node.right == null) {
+            return evaluate(node.left) + 1;
+        }
 
+        // postfix --
+        if (node.value.equals("--") && node.right == null) {
+            return evaluate(node.left) - 1;
+        }
         // unary minus: left is null, right has the operand
         if (node.left == null) {
             return -evaluate(node.right);
@@ -16,6 +24,7 @@ public class Evaluator {
         // binary operator: compute both sides, then combine
         int leftVal  = evaluate(node.left);
         int rightVal = evaluate(node.right);
+
 
         if (node.value.equals("+")) return leftVal + rightVal;
         if (node.value.equals("-")) return leftVal - rightVal;
