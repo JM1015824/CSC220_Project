@@ -57,13 +57,15 @@ public class Parser {
         }
     }
 
-    // F -> ( E ) | number | -F
+    // F -> ( E ) [++|--]? | number [++|--]? | -F
     private void parseF() {
         if (pos >= tokens.size()) {
             throw new RuntimeException("Unexpected end of input");
         }
+
         String t = tokens.get(pos).value;
 
+        // (E)
         if (t.equals("(")) {
             pos++;            // eat (
             parseE();
@@ -71,17 +73,35 @@ public class Parser {
                 throw new RuntimeException("Expected ')'");
             }
             pos++;            // eat )
+
+            // postfix ++ or --
+            if (pos < tokens.size() &&
+                    (tokens.get(pos).value.equals("++") || tokens.get(pos).value.equals("--"))) {
+                pos++;        // eat postfix
+            }
+            return;
         }
-        else if (t.equals("-")) {     // unary minus
-            pos++;
+
+        // unary minus
+        else if (t.equals("-")) {
+            pos++;            // eat -
             parseF();
+            return;
         }
+
+        // number
         else if (isNumber(t)) {
-            pos++;
+            pos++;            // eat number
+
+            // postfix ++ or --
+            if (pos < tokens.size() &&
+                    (tokens.get(pos).value.equals("++") || tokens.get(pos).value.equals("--"))) {
+                pos++;        // eat postfix
+            }
+            return;
         }
-        else {
-            throw new RuntimeException("Unexpected token: " + t);
-        }
+
+        throw new RuntimeException("Unexpected token: " + t);
     }
 
     // helper: is this token text a number?
