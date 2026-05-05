@@ -2,9 +2,9 @@
 
 ### Project Summary
 CSC 220 Final Project
-By Jillian McNamara, Alex Palma
+By Jillian McNamara and Alex Palma
 
-This project aims to be a calcutor for basic expressions and shows a parse tree of said expression. It will error at any miss input or fasely stated expression.
+This project aims to be a calculator for basic expressions and shows a parse tree of said expression. It will error at any miss input or fasely stated expression.
 
 
 ### Setup Instructions
