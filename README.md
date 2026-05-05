@@ -24,11 +24,15 @@ once the expression has been typed we can simply press enter and a horizontal tr
 
 Valid Inputs:
 ( 3 + 2 ) * 5 - 1 
+
 3 + 4 - 2 
+
 (1 + 2) * (3 + 4)
 
 Invalid Inputs:
 ( 3 +* 5)
+
 ( 3 + 2) - 5)
+
 1 + 2 + 4 - 3 *
 
