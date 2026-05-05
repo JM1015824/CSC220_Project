@@ -9,7 +9,7 @@ This project aims to be a calcutor for basic expressions and shows a parse tree 
 
 ### Setup Instructions
 
-
+On the main home page of the GitHub click on the green code button, and either download the files, copy it to an IDE or Open with GitHub desktop. 
 
 ### How to run
 
@@ -20,7 +20,7 @@ When typing the expression it is important to keep in mind that after every oppe
 once the expression has been typed we can simply press enter and a horizontal tree will appear showcasing the expression that the user has put in.
 
 
-#Examples
+### Examples
 
 Valid Inputs:
 ( 3 + 2 ) * 5 - 1 
