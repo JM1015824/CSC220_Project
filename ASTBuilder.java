@@ -57,26 +57,58 @@ public class ASTBuilder {
         }
         return left;
     }
+    private boolean isNumber(String s) {
+        if (s.length() == 0) return false;
+        for (int i = 0; i < s.length(); i++) {
+            if (!Character.isDigit(s.charAt(i))) return false;
+        }
+        return true;
+    }
 
-    // F -> ( E ) | number | -F
     private Node parseF() {
         String t = tokens.get(pos).value;
 
+        // (E)
         if (t.equals("(")) {
             pos++;                  // eat (
             Node inside = parseE();
             pos++;                  // eat )
+
+            // postfix ++ or --
+            if (pos < tokens.size() &&
+                    (tokens.get(pos).value.equals("++") || tokens.get(pos).value.equals("--"))) {
+                String op = tokens.get(pos).value;
+                pos++;
+                return new Node(op, inside, null);   // postfix: operand in left
+            }
+
             return inside;
         }
-        else if (t.equals("-")) {   // unary minus, e.g. -3
+
+        // unary minus (prefix)
+        if (t.equals("-")) {
             pos++;
             Node operand = parseF();
-            // store as a node with operator "-" and only a right child
             return new Node("-", null, operand);
         }
-        else {                      // a number
+
+        // number
+        if (isNumber(t)) {
             pos++;
-            return new Node(t, null, null);
+            Node num = new Node(t, null, null);
+
+            // postfix ++ or --
+            if (pos < tokens.size() &&
+                    (tokens.get(pos).value.equals("++") || tokens.get(pos).value.equals("--"))) {
+                String op = tokens.get(pos).value;
+                pos++;
+                return new Node(op, num, null);   // postfix: operand in left
+            }
+
+            return num;
         }
+
+        throw new RuntimeException("Unexpected token: " + t);
     }
+
 }
