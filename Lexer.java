@@ -32,9 +32,16 @@ public class Lexer {
                 }
                 tokens.add(new Token(number));
             }
+            // ++ or --
+            else if ((c == '+' || c == '-') &&
+                    i + 1 < input.length() &&
+                    input.charAt(i + 1) == c) {
+                tokens.add(new Token("" + c + c));
+                i += 2;
+            }
             // an operator or paren
             else if (c == '+' || c == '-' || c == '*' || c == '/'
-                  || c == '(' || c == ')') {
+                    || c == '(' || c == ')') {
                 tokens.add(new Token("" + c));
                 i++;
             }
